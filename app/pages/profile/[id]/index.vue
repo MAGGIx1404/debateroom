@@ -13,9 +13,12 @@
       <!-- Info -->
       <div class="w-full space-y-6">
         <!-- Name -->
-        <div class="w-full">
+        <div class="w-max relative">
           <h1 class="text-2xl font-semibold flex items-center gap-2">Jeet Ramoliya <CustomTierBadge tier="Legend" /></h1>
           <p class="text-sm">@Maggix1404</p>
+          <div class="absolute bottom-0 left-0 z-10 w-full pointer-events-none scale-200">
+            <CustomLottiePlayer src="/animations/success.lottie" class="w-full" />
+          </div>
         </div>
 
         <!-- Actions -->
