@@ -14,7 +14,7 @@ function handleInput(event) {
 </script>
 
 <template>
-  <div class="w-full sticky bottom-0 right-0 z-10 bg-background flex flex-col items-end gap-3 py-6 pl-10">
+  <div class="w-full sticky bottom-0 right-0 z-10 bg-card flex flex-col items-end gap-3 py-6 pl-10">
     <Textarea v-model="input" placeholder="Type your reply..." :value="input" rows="4" @input="handleInput" />
     <div class="flex items-center gap-3">
       <Select @update:model-value="appendMention">

@@ -22,7 +22,7 @@
         </div>
 
         <!-- Actions -->
-        <div class="w-full flex items-center gap-2">
+        <div class="w-full flex items-center flex-wrap gap-2">
           <CustomGlassShine>
             <Button variant="gradient">
               <CustomLottiePlayer src="/animations/coin.lottie" class="size-5 scale-[2.5]" />
