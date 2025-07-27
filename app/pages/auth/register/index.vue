@@ -6,16 +6,16 @@
     </div>
     <form class="w-full space-y-6" @submit.prevent="onSubmit">
       <div class="w-full space-y-2">
-        <Label for="username">Username : {{ errors.username }}</Label>
-        <Input id="username" v-model="form.username" type="text" placeholder="Enter your username" class="w-full" required :error="errors.username" @input="errors.username = ''" />
+        <Label for="username" :class="errors.username ? 'text-red-500' : ''">Username : {{ errors.username }}</Label>
+        <Input id="username" v-model="username" type="text" placeholder="Enter your username" class="w-full" v-bind="usernameAttrs" />
       </div>
       <div class="w-full space-y-2">
-        <Label for="email">Email : {{ errors.email }}</Label>
-        <Input id="email" v-model="form.email" type="email" placeholder="Enter your email" class="w-full" required :error="errors.email" @input="errors.email = ''" />
+        <Label for="email" :class="errors.email ? 'text-red-500' : ''">Email : {{ errors.email }}</Label>
+        <Input id="email" v-model="email" type="email" placeholder="Enter your email" class="w-full" v-bind="emailAttrs" />
       </div>
       <div class="w-full space-y-2">
-        <Label for="password">Password : {{ errors.password }}</Label>
-        <Input id="password" v-model="form.password" type="password" placeholder="Enter your password" class="w-full" required :error="errors.password" @input="errors.password = ''" />
+        <Label for="password" :class="errors.password ? 'text-red-500' : ''">Password : {{ errors.password }}</Label>
+        <Input id="password" v-model="password" type="password" placeholder="Enter your password" class="w-full" v-bind="passwordAttrs" />
       </div>
       <Button type="submit" class="w-full" :disabled="loading">
         {{ loading ? "Registering..." : "Register" }}
@@ -29,60 +29,46 @@
 </template>
 
 <script setup>
-import { z } from "zod";
+import { useForm } from "vee-validate";
+import * as yup from "yup";
 
 definePageMeta({
-  layout: "auth"
-});
-
-const form = ref({
-  username: "",
-  email: "",
-  password: ""
+  layout: "auth",
+  middleware: "guest"
 });
 
 const router = useRouter();
 
-const loading = ref(false);
-const errors = ref({});
-const serverError = ref("");
-
-const schema = z.object({
-  username: z.string().min(3, "Username must be at least 3 characters"),
-  email: z.string().email("Enter a valid email"),
-  password: z.string().min(6, "Password must be at least 6 characters")
+const { errors, handleSubmit, defineField } = useForm({
+  validationSchema: yup.object({
+    username: yup.string().min(3).max(20).required(),
+    email: yup.string().email().required(),
+    password: yup.string().min(6).required()
+  })
 });
 
-const onSubmit = async () => {
+const loading = ref(false);
+
+const [username, usernameAttrs] = defineField("username");
+const [email, emailAttrs] = defineField("email");
+const [password, passwordAttrs] = defineField("password");
+
+const onSubmit = handleSubmit(async (values) => {
   loading.value = true;
-  errors.value = {};
-  serverError.value = "";
-
-  const result = schema.safeParse(form.value);
-
-  if (!result.success) {
-    result.error.errors.forEach((e) => {
-      if (e.path.length) {
-        errors.value[e.path[0]] = e.message;
-      }
-    });
-    loading.value = false;
-    return;
-  }
 
   try {
     const res = await $fetch("/api/auth/register", {
       method: "POST",
-      body: form.value
+      body: {
+        username: values.username,
+        email: values.email,
+        password: values.password
+      }
     });
 
-    // Success — redirect
     router.push("/auth/login");
   } catch (err) {
-    // Show error
-    serverError.value = err?.data?.message || "Something went wrong";
+    window.alert("Error: " + (err?.data?.message || "Something went wrong"));
   }
-
-  loading.value = false;
-};
+});
 </script>
