@@ -29,12 +29,12 @@
 </template>
 
 <script setup>
+import { toast } from "vue-sonner";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 
 definePageMeta({
-  layout: "auth",
-  middleware: "guest"
+  layout: "auth"
 });
 
 const router = useRouter();
@@ -66,9 +66,14 @@ const onSubmit = handleSubmit(async (values) => {
       }
     });
 
+    toast.success("Registration successful! Please login to continue.");
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate delay
+    loading.value = false;
     router.push("/auth/login");
+    return res;
   } catch (err) {
-    window.alert("Error: " + (err?.data?.message || "Something went wrong"));
+    toast.error(err?.data?.message || "Something went wrong");
+    loading.value = false;
   }
 });
 </script>

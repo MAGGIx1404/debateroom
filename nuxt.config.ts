@@ -1,11 +1,10 @@
 import tailwindcss from "@tailwindcss/vite";
 
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: false },
 
-  modules: ["@nuxt/eslint", "@nuxt/fonts", "@nuxt/image", "@nuxt/scripts", "shadcn-nuxt", "@prisma/nuxt"],
+  modules: ["@nuxt/eslint", "@nuxt/fonts", "@nuxt/image", "@nuxt/scripts", "shadcn-nuxt", "@prisma/nuxt", "@pinia/nuxt"],
 
   fonts: {
     provider: "google",
@@ -39,5 +38,9 @@ export default defineNuxtConfig({
   shadcn: {
     prefix: "",
     componentDir: "./app/components/ui"
+  },
+
+  runtimeConfig: {
+    JWT_SECRET: process.env.JWT_SECRET
   }
 });

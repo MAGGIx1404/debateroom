@@ -1,7 +1,12 @@
 <template>
   <main class="w-full grid grid-cols-8 gap-8 items-start">
     <!-- Left Panel -->
-    <WidgetsTopicsBox title="Explore Topics" />
+    <Card class="w-full border col-span-2 sticky top-[109px]">
+      <h1 class="text-2xl font-medium">Categories</h1>
+      <Separator />
+
+      <p class="text-sm">{{ store.getUser }}'s Categories</p>
+    </Card>
 
     <!-- Main Content -->
     <Card class="w-full border col-span-4 min-h-screen">
@@ -37,9 +42,7 @@
       <Separator />
 
       <!-- Debates -->
-      <div v-if="data.length" class="w-full flex flex-col gap-4">
-        <WidgetsDebateCard v-for="i in data" :key="i" :data="i" />
-      </div>
+      <h1>Debates</h1>
     </Card>
 
     <!-- Right Panel -->
@@ -51,26 +54,7 @@
 </template>
 
 <script setup>
-import { faker } from "@faker-js/faker";
 import { Plus } from "lucide-vue-next";
 
-const generateData = () => ({
-  title: faker.lorem.sentence(),
-  description: faker.lorem.paragraph(),
-  tags: faker.helpers.uniqueArray(faker.lorem.word, 4),
-  commentsCount: faker.string.numeric(2),
-  lastUpdated: faker.date.recent().toLocaleString(),
-  status: faker.helpers.arrayElement(["Discussing", "Completed", "Abandoned", "Unanswered"])
-});
-
-const data = computed(() => {
-  const debates = [];
-  if (import.meta.server) {
-    return debates;
-  }
-  for (let i = 0; i < 20; i++) {
-    debates.push(generateData());
-  }
-  return debates;
-});
+const store = useUserStore();
 </script>
