@@ -17,10 +17,6 @@ const { data } = await useFetch("/api/auth/me", {
 });
 
 if (data.value) {
-  if (data.value.statusCode === 401 || data.value.statusCode === 404) {
-    navigateTo("/auth/login");
-  } else {
-    store.setUser(data.value.user);
-  }
+  store.setUser(data.value);
 }
 </script>

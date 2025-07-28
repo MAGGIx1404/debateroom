@@ -1,6 +1,6 @@
 <template>
   <div class="w-full space-y-2">
-    <Label for="tags"> Tags :</Label>
+    <slot />
     <Input id="tags" v-model="input" name="tags" placeholder="Add a tags" @keydown.enter.prevent="addTag" @keydown.backspace="removeLastTag" />
 
     <TransitionGroup class="w-full flex flex-wrap gap-2 items-center" name="list" tag="div">
@@ -15,7 +15,6 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from "vue";
 import { X } from "lucide-vue-next";
 
 const tags = ref([]);

@@ -2,25 +2,31 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model User {
-  id            String    @id @default(cuid())
-  username      String    @unique
-  email         String    @unique
-  password      String
-  description   String?
-  avatarUrl     String?
-  bannerUrl     String?
-  rank          Rank      @default(NOVICE)
-  points        Int       @default(0)
-  createdAt     DateTime  @default(now())
+    id          String  @id @default(cuid())
+    username    String  @unique
+    email       String  @unique
+    password    String
+    description String?
+    avatarUrl   String?
+    bannerUrl   String?
+
+    rank      Rank     @default(NOVICE)
+    points    Int      @default(0)
+    createdAt DateTime @default(now())
+
+    debates Debate[] @relation("UserDebates")
+    replies Reply[]
+
+    wonDebates Debate[] @relation("DebateWinners")
 }
 
 enum Rank {
@@ -29,4 +35,83 @@ enum Rank {
     ELITE
     MASTERMIND
     LEGEND
+}
+
+model Debate {
+    id            String           @id @default(cuid())
+    name          String
+    description   String
+    visibility    DebateVisibility @default(PUBLIC)
+    aiPersonaType AiPersonaType
+
+    creatorId String
+    creator   User   @relation("UserDebates", fields: [creatorId], references: [id])
+
+    replies Reply[]
+
+    winners   User[]   @relation("DebateWinners")
+    winnerIds String[] // stores user IDs of winners
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    tags DebateTag[]
+}
+
+
+model DebateTag {
+    id        String @id @default(cuid())
+    debateId  String
+    debate    Debate @relation(fields: [debateId], references: [id])
+
+    tagId     String
+    tag       Tag    @relation(fields: [tagId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@unique([debateId, tagId]) // Ensure a tag can only be associated with a debate once
+}
+
+model Tag {
+    id        String @id @default(cuid())
+    name      String @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    debates DebateTag[]
+}
+
+enum DebateVisibility {
+    PUBLIC
+    PRIVATE
+    ANONYMOUS
+}
+
+enum AiPersonaType {
+    PHILOSOPHER
+    PROFESSOR
+    STREET_DEBATER
+    LOGICIAN
+    EMPATH
+}
+
+model Reply {
+    id       String @id @default(cuid())
+    content  String
+    debateId String
+    debate   Debate @relation(fields: [debateId], references: [id])
+
+    authorId String
+    author   User   @relation(fields: [authorId], references: [id])
+
+    parentId String? // For nested replies
+    parent   Reply?  @relation("ReplyThread", fields: [parentId], references: [id])
+    children Reply[] @relation("ReplyThread")
+
+    upvotes    Int     @default(0)
+    isAccepted Boolean @default(false)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }

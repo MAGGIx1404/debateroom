@@ -42,7 +42,12 @@
       <Separator />
 
       <!-- Debates -->
-      <h1>Debates</h1>
+      <div class="w-full space-y-6">
+        <p v-if="debatesStore.getDebates" class="text-sm">
+          {{ debatesStore.getDebates }}
+        </p>
+        <!-- <WidgetsDebateCard v-for="debate in data" :key="debate.id" :data="debate" /> -->
+      </div>
     </Card>
 
     <!-- Right Panel -->
@@ -54,7 +59,26 @@
 </template>
 
 <script setup>
+import { onMounted } from "#imports";
 import { Plus } from "lucide-vue-next";
 
 const store = useUserStore();
+const debatesStore = useDebateStore();
+
+onMounted(async () => {
+  await debatesStore.loadMore();
+});
+
+function handleScroll() {
+  const bottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 300;
+  if (bottom) debatesStore.loadMore();
+}
+
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
 </script>

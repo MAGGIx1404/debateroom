@@ -60,10 +60,14 @@
             <TabsTrigger value="replies">Replies</TabsTrigger>
           </TabsList>
           <TabsContent value="debate" class="space-y-4">
-            <WidgetsDebateCard v-for="(debate, index) in data" :key="index" :data="debate" />
+            <div class="w-full h-40 grid place-items-center">
+              <p class="text-base">This feature is coming soon! Stay tuned for updates.</p>
+            </div>
           </TabsContent>
           <TabsContent value="won" class="space-y-4">
-            <WidgetsDebateCard v-for="(debate, index) in data" :key="index" :data="debate" />
+            <div class="w-full h-40 grid place-items-center">
+              <p class="text-base">This feature is coming soon! Stay tuned for updates.</p>
+            </div>
           </TabsContent>
           <TabsContent value="followers">
             <div class="w-full h-40 grid place-items-center">
@@ -92,26 +96,4 @@
   </main>
 </template>
 
-<script setup>
-import { faker } from "@faker-js/faker";
-
-const generateData = () => ({
-  title: faker.lorem.sentence(),
-  description: faker.lorem.paragraph(),
-  tags: faker.helpers.uniqueArray(faker.lorem.word, 4),
-  commentsCount: faker.string.numeric(2),
-  lastUpdated: faker.date.recent().toLocaleString(),
-  status: faker.helpers.arrayElement(["Discussing", "Completed", "Abandoned", "Unanswered"])
-});
-
-const data = computed(() => {
-  const debates = [];
-  if (import.meta.server) {
-    return debates;
-  }
-  for (let i = 0; i < 10; i++) {
-    debates.push(generateData());
-  }
-  return debates;
-});
-</script>
+<script setup></script>

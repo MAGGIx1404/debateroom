@@ -33,10 +33,10 @@ export default defineEventHandler(async (event) => {
     { expiresIn: "7d" }
   );
 
-  // Optionally set cookie
   setCookie(event, "token", token, {
     httpOnly: true,
     sameSite: true,
+    secure: process.env.NODE_ENV === "production",
     maxAge: 60 * 60 * 24 * 7 // 7 days
   });
 

@@ -1,19 +1,19 @@
 <template>
-  <NuxtLink to="/debates/jidjasd" class="w-full border p-6 shadow flex flex-col gap-3">
-    <h1 class="text-xl">{{ data.title }}</h1>
+  <NuxtLink :to="`/debates/${data.id}`" class="w-full border p-6 shadow flex flex-col gap-3">
+    <h1 class="text-xl">{{ data.name }}</h1>
     <p class="text-sm">
       {{ data.description }}
     </p>
     <div class="w-full flex items-center justify-start flex-wrap gap-2">
-      <Badge v-for="tag in data.tags" :key="tag" variant="secondary" class="text-xs"> #{{ tag }} </Badge>
+      <Badge v-for="tag in data.tags" :key="tag" variant="secondary" class="text-xs"> #{{ tag.tag.name }} </Badge>
     </div>
 
     <Separator class="my-2 mt-auto" />
 
     <div class="w-full flex items-center justify-between">
       <div class="w-full flex items-center gap-2">
-        <Badge class="text-sm" variant="outline"><MessageSquareMore /> {{ data.commentsCount }} Comments</Badge>
-        <Badge class="text-sm" variant="outline"><Clock /> {{ dayjs(data.lastUpdated).fromNow() }}</Badge>
+        <Badge class="text-sm" variant="outline"><MessageSquareMore /> {{ data.replyCount }} Comments</Badge>
+        <Badge class="text-sm" variant="outline"><Clock /> {{ dayjs(data.updatedAt).fromNow() }}</Badge>
       </div>
       <Badge
         class="text-sm"
@@ -24,7 +24,7 @@
           'bg-gray-100 text-gray-800': data.status === 'Unanswered'
         }"
       >
-        {{ data.status }}
+        Discussing
       </Badge>
     </div>
   </NuxtLink>

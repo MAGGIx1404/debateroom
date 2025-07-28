@@ -36,7 +36,7 @@ const links = [
   },
   {
     name: "Profile",
-    to: `/profile/${user.value.id}`
+    to: `/profile/${user.value.user.id}`
   }
 ];
 </script>

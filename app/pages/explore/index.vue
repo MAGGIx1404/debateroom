@@ -27,34 +27,9 @@
         </Button>
       </div>
     </Card>
-
-    <div class="w-full grid grid-cols-3 gap-6">
-      <WidgetsDebateCard v-for="i in data" :key="i" :data="i" />
-    </div>
   </div>
 </template>
 
 <script setup>
-import { faker } from "@faker-js/faker";
 import { Plus } from "lucide-vue-next";
-
-const generateData = () => ({
-  title: faker.lorem.sentence(),
-  description: faker.lorem.paragraph(),
-  tags: faker.helpers.uniqueArray(faker.lorem.word, 4),
-  commentsCount: faker.string.numeric(2),
-  lastUpdated: faker.date.recent().toLocaleString(),
-  status: faker.helpers.arrayElement(["Discussing", "Completed", "Abandoned", "Unanswered"])
-});
-
-const data = computed(() => {
-  const debates = [];
-  if (import.meta.server) {
-    return debates;
-  }
-  for (let i = 0; i < 30; i++) {
-    debates.push(generateData());
-  }
-  return debates;
-});
 </script>
