@@ -46,6 +46,7 @@ export default defineEventHandler(async (event) => {
     data,
     total,
     page,
-    pageCount: Math.ceil(total / limit)
+    pageCount: Math.ceil(total / limit),
+    hasMore: total > offset + limit
   };
 });

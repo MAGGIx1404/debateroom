@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div :class="class">
     <slot />
 
     <div class="absolute inset-0 pointer-events-none overflow-hidden">
@@ -7,6 +7,15 @@
     </div>
   </div>
 </template>
+
+<script setup>
+defineProps({
+  class: {
+    type: String,
+    default: "relative"
+  }
+});
+</script>
 
 <style scoped>
 .shine {

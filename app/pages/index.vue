@@ -6,6 +6,8 @@
       <Separator />
 
       <p class="text-sm">{{ store.getUser }}'s Categories</p>
+
+      <h1 class="text-xl">No. of debates: {{ debatesStore.getDebates.length }}</h1>
     </Card>
 
     <!-- Main Content -->
@@ -43,10 +45,18 @@
 
       <!-- Debates -->
       <div class="w-full space-y-6">
-        <p v-if="debatesStore.getDebates" class="text-sm">
-          {{ debatesStore.getDebates }}
-        </p>
-        <!-- <WidgetsDebateCard v-for="debate in data" :key="debate.id" :data="debate" /> -->
+        <!-- Initial Skeletons -->
+        <div v-if="debatesStore.loading && debatesStore.getDebates.length === 0" class="w-full space-y-6">
+          <SkeletonsDebateCard v-for="i in 5" :key="i" :index="i" />
+        </div>
+
+        <!-- Main Content -->
+        <WidgetsDebateCard v-for="debate in debatesStore.getDebates" :key="debate.id" :data="debate" />
+
+        <!-- On scroll Sekeletons -->
+        <div v-if="debatesStore.loading && debatesStore.getDebates.length > 0" class="w-full space-y-6">
+          <SkeletonsDebateCard v-for="i in 3" :key="i" :index="i" />
+        </div>
       </div>
     </Card>
 
@@ -59,19 +69,20 @@
 </template>
 
 <script setup>
-import { onMounted } from "#imports";
 import { Plus } from "lucide-vue-next";
 
 const store = useUserStore();
 const debatesStore = useDebateStore();
 
 onMounted(async () => {
-  await debatesStore.loadMore();
+  await debatesStore.fetchDebates();
 });
 
 function handleScroll() {
   const bottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 300;
-  if (bottom) debatesStore.loadMore();
+  if (bottom) {
+    debatesStore.fetchDebates();
+  }
 }
 
 onMounted(() => {

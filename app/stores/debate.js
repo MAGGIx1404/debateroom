@@ -10,35 +10,32 @@ export const useDebateStore = defineStore(
       loading: false
     }),
     actions: {
-      async loadMore() {
+      async fetchDebates() {
         if (this.loading || !this.hasMore) return;
-
         this.loading = true;
+
         try {
-          const { data } = await useFetch("/api/debates", {
-            query: { page: this.page, limit: 10 },
-            key: `debates-page-${this.page}`,
-            method: "GET"
+          await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate a delay
+          const response = await $fetch("/api/debates", {
+            params: { page: this.page, limit: 10 }
           });
 
-          if (data.value && data.value.length > 0) {
-            this.debates.push(...data.value);
-            this.page++;
+          if (response.success) {
+            this.debates.push(...response.data);
+            this.hasMore = response.hasMore;
+            this.page += 1;
+            this.loading = false;
           } else {
-            this.hasMore = false;
+            console.error("Failed to fetch debates:", response);
           }
-        } catch (e) {
-          console.error("Failed to load debates", e);
-        } finally {
-          this.loading = false;
+        } catch (error) {
+          console.error("Error fetching debates:", error);
         }
       }
     },
     getters: {
       getDebates: (state) => state.debates,
-      getPage: (state) => state.page,
-      hasMoreDebates: (state) => state.hasMore,
-      isLoading: (state) => state.loading
+      getDebateById: (state) => (id) => state.debates.find((debate) => debate.id === id)
     }
   },
   {

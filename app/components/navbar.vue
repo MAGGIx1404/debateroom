@@ -1,5 +1,5 @@
 <template>
-  <nav class="w-full sticky top-0 left-0 z-10 bg-background border-b py-4 px-20 flex items-center justify-between">
+  <nav class="w-full sticky top-0 left-0 z-20 bg-background border-b py-4 px-20 flex items-center justify-between">
     <NuxtLink to="/" class="text-xl font-semibold"> DEBATE ROOM </NuxtLink>
 
     <div class="flex items-centerer gap-2">
