@@ -24,31 +24,31 @@ const users = [
   {
     name: "Jeet Ramoliya",
     username: "Maggix1404",
-    image: "https://avatars.githubusercontent.com/u/74851359?v=4",
+    image: "/avatars/1.png",
     tier: "Legend"
   },
   {
     name: "John Doe",
     username: "john_doe",
-    image: "https://avatars.githubusercontent.com/u/23456789?v=4",
+    image: "/avatars/2.png",
     tier: "Novice"
   },
   {
     name: "Jane Smith",
     username: "jane_smith",
-    image: "https://avatars.githubusercontent.com/u/34567890?v=4",
+    image: "/avatars/3.png",
     tier: "Mastermind"
   },
   {
     name: "Alice Johnson",
     username: "alice_johnson",
-    image: "https://avatars.githubusercontent.com/u/45678901?v=4",
+    image: "/avatars/4.png",
     tier: "Novice"
   },
   {
     name: "Bob Brown",
     username: "bob_brown",
-    image: "https://avatars.githubusercontent.com/u/56789012?v=4",
+    image: "/avatars/5.png",
     tier: "Novice"
   }
 ];

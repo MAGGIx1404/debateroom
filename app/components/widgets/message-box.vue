@@ -3,7 +3,7 @@
     <div class="w-full flex items-center justify-between gap-4">
       <div class="flex items-center gap-2">
         <Avatar>
-          <AvatarImage src="https://github.com/unovue.png" alt="@unovue" />
+          <AvatarImage src="/avatars/2.png" alt="@unovue" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <p class="text-sm font-semibold">John Doe</p>

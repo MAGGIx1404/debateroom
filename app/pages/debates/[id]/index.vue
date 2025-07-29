@@ -1,5 +1,5 @@
 <template>
-  <main class="w-full grid grid-cols-8 gap-8 items-start">
+  <main v-if="debate" class="w-full grid grid-cols-8 gap-8 items-start">
     <!-- Left Panel -->
     <WidgetsTopicsBox title="Debate Topics" />
 
@@ -7,12 +7,15 @@
     <Card class="w-full border col-span-4 min-h-screen">
       <!-- Header -->
       <div class="w-full space-y-4">
-        <h1 class="text-2xl font-medium">Is animals are better than humans? and which animal are will be the best pet?</h1>
+        <h1 class="text-2xl font-medium">{{ debate.name }}</h1>
+        <p class="text-base">
+          {{ debate.description || "No description available for this debate." }}
+        </p>
 
         <div class="w-full">
           <div class="w-full flex items-center gap-2">
-            <Badge class="text-sm" variant="outline"><MessageSquareMore /> 32 Comments</Badge>
-            <Badge class="text-sm" variant="outline"><Clock /> 1 min ago</Badge>
+            <Badge class="text-sm" variant="outline"><MessageSquareMore /> {{ debate.replies.length }} Comments</Badge>
+            <Badge class="text-sm" variant="outline"><Clock /> {{ dayjs(debate.createdAt).fromNow() }}</Badge>
           </div>
         </div>
       </div>
@@ -21,7 +24,8 @@
 
       <!-- Debate Panel -->
       <div class="w-full space-y-6 relative">
-        <WidgetsMessageBox v-for="i in 15" :key="i" />
+        <!-- <WidgetsMessageBox v-for="i in 15" :key="i" /> -->
+        {{ debate.replies }}
 
         <!-- Reply Box -->
         <CustomReplyInput />
@@ -35,8 +39,21 @@
       <WidgetsUsersList />
     </Card>
   </main>
+
+  <Screens404 v-else-if="error" :data="error" />
 </template>
 
 <script setup>
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { MessageSquareMore, Clock } from "lucide-vue-next";
+
+dayjs.extend(relativeTime);
+
+const route = useRoute();
+
+const { data: debate, error } = await useFetch(`/api/debates/${route.params.id}`, {
+  key: `debate-${route.params.id}`,
+  server: true
+});
 </script>

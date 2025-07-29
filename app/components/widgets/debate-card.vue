@@ -16,9 +16,9 @@
         <Badge class="text-sm" variant="outline"><Clock /> {{ dayjs(data.updatedAt).fromNow() }}</Badge>
       </div>
 
-      <div class="flex items-center -space-x-2">
-        <Avatar v-for="i in 4" :key="i" class="size-8" :class="`z-[${i}]`">
-          <AvatarImage src="https://github.com/unovue.png" alt="@unovue" />
+      <div class="flex items-center -space-x-2 hover:space-x-1">
+        <Avatar v-for="i in 4" :key="i" class="size-8 border border-accent-foreground" :class="`z-[${i}]`">
+          <AvatarImage :src="`/avatars/${i}.png`" alt="@user" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <div class="size-8 grid place-items-center text-center bg-accent z-[5]">
