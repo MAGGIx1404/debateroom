@@ -3,7 +3,7 @@
     <h1 class="text-2xl font-medium">{{ title }}</h1>
     <Separator />
     <div class="w-full flex flex-wrap gap-2">
-      <Badge v-for="tag in 20" :key="tag" class="cursor-pointer" variant="secondary"> #{{ tag }} </Badge>
+      <Badge v-for="tag in tags" :key="tag" class="cursor-pointer" variant="secondary"> #{{ tag.tag.name }} </Badge>
     </div>
   </Card>
 </template>
@@ -12,7 +12,11 @@
 defineProps({
   title: {
     type: String,
-    default: ""
+    default: "Topics"
+  },
+  tags: {
+    type: Array,
+    default: () => []
   }
 });
 </script>

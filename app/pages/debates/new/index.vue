@@ -105,7 +105,6 @@ const [tags] = defineField("tags");
 
 const onSubmit = handleSubmit(async (values) => {
   loading.value = true;
-  console.log(useCookie("token").value);
 
   try {
     const res = await $fetch("/api/debates", {

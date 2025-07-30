@@ -1,5 +1,5 @@
 export default function useTheme() {
-  const enabled = useState<boolean | null>("theme", () => null);
+  const enabled = useState("theme", () => null);
 
   onMounted(() => {
     enabled.value = localStorage.getItem("theme") === "dark" ? true : false;

@@ -1,10 +1,10 @@
 <template>
   <main v-if="debate" class="w-full grid grid-cols-8 gap-8 items-start">
     <!-- Left Panel -->
-    <WidgetsTopicsBox title="Debate Topics" />
+    <WidgetsTopicsBox title="Debate Topics" :tags="debate.tags" />
 
     <!-- Main Content -->
-    <Card class="w-full border col-span-4 min-h-screen">
+    <Card class="w-full border col-span-4">
       <!-- Header -->
       <div class="w-full space-y-4">
         <h1 class="text-2xl font-medium">{{ debate.name }}</h1>
@@ -23,9 +23,13 @@
       <Separator />
 
       <!-- Debate Panel -->
-      <div class="w-full space-y-6 relative">
-        <!-- <WidgetsMessageBox v-for="i in 15" :key="i" /> -->
-        {{ debate.replies }}
+      <div class="w-full relative">
+        <!-- Messages -->
+        <div v-if="debate.replies.length > 0" class="w-full space-y-6">
+          <WidgetsMessageBox v-for="reply in debate.replies" :key="reply.id" :data="reply" />
+        </div>
+
+        <ScreensEmpty v-else />
 
         <!-- Reply Box -->
         <CustomReplyInput />
