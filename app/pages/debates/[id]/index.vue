@@ -25,14 +25,19 @@
       <!-- Debate Panel -->
       <div class="w-full relative">
         <!-- Messages -->
-        <div v-if="debate.replies.length > 0" class="w-full space-y-6">
-          <WidgetsMessageBox v-for="reply in debate.replies" :key="reply.id" :data="reply" />
-        </div>
 
+        <div v-if="debate.replies.length" class="w-full space-y-6">
+          <WidgetsMessageBox v-for="reply in debate.replies" :key="reply.id" :data="reply" />
+
+          <!-- Live Messages -->
+          <div v-if="store.getReplies.length" class="space-y-6 w-full">
+            <WidgetsMessageBox v-for="reply in store.getReplies" :key="reply.id" :data="reply" />
+          </div>
+        </div>
         <ScreensEmpty v-else />
 
         <!-- Reply Box -->
-        <CustomReplyInput />
+        <CustomReplyInput :socket-event="sendMessage" />
       </div>
     </Card>
 
@@ -48,6 +53,7 @@
 </template>
 
 <script setup>
+import { onMounted, useRepliesStore } from "#imports";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { MessageSquareMore, Clock } from "lucide-vue-next";
@@ -59,5 +65,45 @@ const route = useRoute();
 const { data: debate, error } = await useFetch(`/api/debates/${route.params.id}`, {
   key: `debate-${route.params.id}`,
   server: true
+});
+
+const { sendMessage } = useSocket();
+const store = useRepliesStore();
+
+onMounted(() => {
+  sendMessage(
+    JSON.stringify({
+      type: "join",
+      debateId: route.params.id
+    })
+  );
+});
+
+function onNewReply() {
+  const repliesContainer = document.querySelector(".w-full.space-y-6");
+  if (repliesContainer) {
+    window.scrollTo({
+      top: repliesContainer.scrollHeight,
+      behavior: "smooth"
+    });
+  }
+
+  const sound = new Audio("/sounds/notification.mp3");
+  sound.play();
+}
+
+watch(store.getReplies, (newReplies) => {
+  onNewReply();
+});
+
+onMounted(() => {
+  const unlockAudio = () => {
+    const audio = new Audio("/sounds/notification.mp3");
+    audio.muted = true;
+    audio.play().catch(() => {});
+    document.removeEventListener("click", unlockAudio);
+  };
+
+  document.addEventListener("click", unlockAudio, { once: true });
 });
 </script>

@@ -1,13 +1,16 @@
 <script setup>
-import { toast } from "vue-sonner";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { MessageSquareMore } from "lucide-vue-next";
 
-const { errors, handleSubmit, defineField } = useForm({
-  validationSchema: yup.object({
-    message: yup.string().required("Message is required")
-  })
+import { toast } from "vue-sonner";
+import { useRepliesStore, useUserStore } from "#imports";
+
+const props = defineProps({
+  socketEvent: {
+    type: Function,
+    required: true
+  }
 });
 
 const route = useRoute();
@@ -16,9 +19,17 @@ const id = route.params.id;
 const loading = ref(false);
 const isMessageSended = ref(false);
 
-const [message, messageAttrs] = defineField("message");
-
+const replyStore = useRepliesStore();
+const userStore = useUserStore();
 const users = ["jeet", "alex", "debatebot", "sara"];
+
+const { errors, handleSubmit, defineField } = useForm({
+  validationSchema: yup.object({
+    message: yup.string().required("Message is required")
+  })
+});
+
+const [message, messageAttrs] = defineField("message");
 
 const onSubmit = handleSubmit(async (values) => {
   loading.value = true;
@@ -36,12 +47,37 @@ const onSubmit = handleSubmit(async (values) => {
       }
     });
 
+    await props.socketEvent(
+      JSON.stringify({
+        type: "message",
+        debateId: id,
+        content: values.message,
+        author: {
+          id: userStore.user.user.id,
+          username: userStore.user.user.username
+        }
+      })
+    );
+
+    replyStore.addReply({
+      type: "message",
+      debateId: id,
+      content: values.message,
+      author: {
+        id: userStore.user.user.id,
+        username: userStore.user.user.username
+      }
+    });
+
     toast.success("Reply sent successfully!");
     await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate
+
     isMessageSended.value = true;
     message.value = "";
     loading.value = false;
   } catch (error) {
+    console.log(error);
+
     toast.error(error?.data?.message || "Something went wrong");
     loading.value = false;
     isMessageSended.value = false;
@@ -66,7 +102,9 @@ function handleInput(event) {
           <AvatarImage src="/avatars/2.png" alt="@unovue" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-        <p class="text-sm font-semibold">John Doe</p>
+        <p class="text-sm font-semibold">
+          {{ userStore.user.user.username }}
+        </p>
       </div>
     </div>
 

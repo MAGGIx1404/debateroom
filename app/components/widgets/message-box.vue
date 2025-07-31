@@ -13,7 +13,7 @@
       </p>
     </div>
     <Card class="w-[calc(100%-40px)] ml-auto">
-      <p class="text-base">
+      <p class="text-base font-semibold">
         {{ data.content }}
       </p>
 
@@ -21,11 +21,11 @@
 
       <div v-if="!isCurrentUser" class="w-full flex items-center justify-between gap-4">
         <div class="w-full flex items-center gap-2">
-          <Button variant="outline"> <ThumbsUp /> Upvote </Button>
-          <Button variant="outline"> <ThumbsDown /> Downvote </Button>
+          <Button variant="ghost"> <ThumbsUp /> Upvote </Button>
+          <Button variant="ghost"> <ThumbsDown /> Downvote </Button>
         </div>
 
-        <Button variant="secondary"> <Crown /> Adopt this answer </Button>
+        <Button variant="ghost"> <Crown /> Adopt this answer </Button>
       </div>
     </Card>
   </div>

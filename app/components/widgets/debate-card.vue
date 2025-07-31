@@ -28,11 +28,11 @@
     </div>
 
     <!-- Taglines -->
-    <CustomGlassShine
+    <!-- <CustomGlassShine
       class="absolute top-0 right-0 z-10 px-20 py-1 rotate-45 translate-x-16 translate-y-8 bg-red-600 bg-gradient-to-r from-yellow-600 to-yellow-500 text-primary-foreground shadow-[0px_0px_10px_0px] shadow-yellow-400"
     >
       <p class="text-base">Winner</p>
-    </CustomGlassShine>
+    </CustomGlassShine> -->
   </NuxtLink>
 </template>
 
