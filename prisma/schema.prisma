@@ -27,13 +27,20 @@ model User {
     replies Reply[]
 
     wonDebates Debate[] @relation("DebateWinners")
+
+    Vote          Vote[]
+    notifications Notification[]
 }
 
 enum Rank {
     NOVICE
+    APPRENTICE
     CHALLENGER
-    ELITE
+    THINKER
+    STRATEGIST
+    DEBATER
     MASTERMIND
+    ELITE
     LEGEND
 }
 
@@ -56,16 +63,17 @@ model Debate {
     updatedAt DateTime @updatedAt
 
     tags DebateTag[]
+
+    Vote Vote[]
 }
 
-
 model DebateTag {
-    id        String @id @default(cuid())
-    debateId  String
-    debate    Debate @relation(fields: [debateId], references: [id])
+    id       String @id @default(cuid())
+    debateId String
+    debate   Debate @relation(fields: [debateId], references: [id])
 
-    tagId     String
-    tag       Tag    @relation(fields: [tagId], references: [id])
+    tagId String
+    tag   Tag    @relation(fields: [tagId], references: [id])
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -74,8 +82,8 @@ model DebateTag {
 }
 
 model Tag {
-    id        String @id @default(cuid())
-    name      String @unique
+    id        String   @id @default(cuid())
+    name      String   @unique
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
@@ -114,4 +122,40 @@ model Reply {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
+
+model Vote {
+    id     String @id @default(cuid())
+    userId String
+    user   User   @relation(fields: [userId], references: [id])
+
+    voteType VoteType
+
+    debateId String
+    debate   Debate @relation(fields: [debateId], references: [id])
+
+    createdAt DateTime @default(now())
+
+    @@unique([userId, debateId]) // Ensure a user can only vote once per debate
+}
+
+enum VoteType {
+    UPVOTE
+    DOWNVOTE
+    WINNER
+}
+
+model Notification {
+    id     String @id @default(cuid())
+    userId String
+    user   User   @relation(fields: [userId], references: [id])
+
+    content String
+    rawData Json?
+    isRead  Boolean @default(false)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([userId, isRead]) // Index for efficient querying of unread notifications
 }

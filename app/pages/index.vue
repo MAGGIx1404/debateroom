@@ -1,17 +1,6 @@
 <template>
-  <main class="w-full grid grid-cols-8 gap-8 items-start">
-    <!-- Left Panel -->
-    <Card class="w-full border col-span-2 sticky top-[109px]">
-      <h1 class="text-2xl font-medium">Categories</h1>
-      <Separator />
-
-      <p class="text-sm">{{ store.getUser }}'s Categories</p>
-
-      <h1 class="text-xl">No. of debates: {{ debatesStore.getDebates.length }}</h1>
-    </Card>
-
-    <!-- Main Content -->
-    <Card class="w-full border col-span-4 min-h-screen">
+  <Wrapper class="w-full grid grid-cols-8 gap-5">
+    <Card class="w-full col-span-6">
       <!-- Header -->
       <div class="w-full flex items-center justify-between">
         <h1 class="text-2xl font-medium">Latest Discussions</h1>
@@ -60,23 +49,33 @@
       </div>
     </Card>
 
-    <!-- Right Panel -->
-    <Card class="w-full border col-span-2 sticky top-[109px]">
+    <!-- Leaderboard -->
+    <Card class="w-full col-span-2 h-[calc(100vh-109px)] sticky top-[89px] rounded-lg">
       <h1 class="text-2xl font-medium">Leaderboard</h1>
       <Separator />
+
+      <div class="w-full space-y-2">
+        <Avatar>
+          <AvatarImage :src="userStore.getUser.avatarUrl" alt="@user" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+        <p class="text-base">
+          id : {{ userStore.getUser.id }}<br />
+          Username : {{ userStore.getUser.username }}<br />
+          Email : {{ userStore.getUser.email }}<br />
+          Points : {{ userStore.getUser.points }}<br />
+          Rank : {{ userStore.getUser.rank }}
+        </p>
+      </div>
     </Card>
-  </main>
+  </Wrapper>
 </template>
 
 <script setup>
 import { Plus } from "lucide-vue-next";
 
-const store = useUserStore();
 const debatesStore = useDebateStore();
-
-onMounted(async () => {
-  await debatesStore.fetchDebates();
-});
+const userStore = useUserStore();
 
 function handleScroll() {
   const bottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 300;
@@ -85,11 +84,13 @@ function handleScroll() {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
+  await debatesStore.fetchDebates();
   window.addEventListener("scroll", handleScroll);
 });
 
 onBeforeUnmount(() => {
+  debatesStore.clearDebates();
   window.removeEventListener("scroll", handleScroll);
 });
 </script>

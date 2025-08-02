@@ -7,6 +7,11 @@ export const useUserStore = defineStore("user", {
   actions: {
     setUser(user) {
       this.user = user;
+    },
+    updatePoints(points) {
+      if (this.user) {
+        this.user.user.points += points;
+      }
     }
   },
   getters: {

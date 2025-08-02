@@ -1,6 +1,5 @@
 <template>
   <Navbar />
-  <ScreensAvatarSelection v-if="!store.getUser.avatarUrl" />
 
   <div class="w-full grid grid-cols-13">
     <Sidebar />

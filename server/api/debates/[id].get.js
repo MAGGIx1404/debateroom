@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
     where: { id },
     include: {
       creator: {
-        select: { id: true, username: true }
+        select: { id: true, username: true, rank: true, avatarUrl: true }
       },
       winners: {
         select: { id: true, username: true }

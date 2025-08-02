@@ -15,7 +15,7 @@ export const useDebateStore = defineStore(
         this.loading = true;
 
         try {
-          await new Promise((resolve) => setTimeout(resolve, 100)); // Simulate a delay
+          await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate a delay
           const response = await $fetch("/api/debates", {
             params: { page: this.page, limit: 10 }
           });
@@ -31,6 +31,12 @@ export const useDebateStore = defineStore(
         } catch (error) {
           console.error("Error fetching debates:", error);
         }
+      },
+      clearDebates() {
+        this.debates = [];
+        this.page = 1;
+        this.hasMore = true;
+        this.loading = false;
       }
     },
     getters: {

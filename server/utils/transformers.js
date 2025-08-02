@@ -4,6 +4,7 @@ export const userTransformer = (user) => {
     username: user.username,
     email: user.email,
     rank: user.rank,
-    avatarUrl: user.avatarUrl
+    avatarUrl: user.avatarUrl,
+    points: user.points
   };
 };

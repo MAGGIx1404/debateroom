@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full border p-6 shadow flex flex-col gap-3 animate-pulse"
+    class="w-full border p-6 shadow flex flex-col gap-3 animate-pulse rounded-lg"
     :style="{
       animationDelay: `${index * 250}ms`
     }"

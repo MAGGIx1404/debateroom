@@ -1,10 +1,7 @@
 <template>
-  <div class="w-full grid grid-cols-8 gap-8 items-start">
-    <!-- Left Panel -->
-    <WidgetsTopicsBox title="Hot Topics" />
-
+  <Wrapper class="w-full grid grid-cols-8 gap-5 items-start">
     <!-- Center Content -->
-    <Card class="w-full border col-span-4">
+    <Card class="w-full border col-span-6">
       <h1 class="text-2xl font-medium">Create a New Debate</h1>
       <Separator />
 
@@ -71,11 +68,11 @@
     </Card>
 
     <!-- Right Panel -->
-    <Card class="w-full border col-span-2 sticky top-[109px]">
+    <Card class="w-full border col-span-2 sticky top-[89px]">
       <h1 class="text-2xl font-medium flex items-center gap-2">Recent Activity</h1>
       <Separator />
     </Card>
-  </div>
+  </Wrapper>
 </template>
 
 <script setup>
@@ -107,7 +104,7 @@ const onSubmit = handleSubmit(async (values) => {
   loading.value = true;
 
   try {
-    const res = await $fetch("/api/debates", {
+    const res = await $fetch("/api/debates/create", {
       method: "POST",
       body: {
         name: values.name,

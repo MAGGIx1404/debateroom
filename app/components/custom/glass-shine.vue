@@ -2,7 +2,7 @@
   <div :class="class">
     <slot />
 
-    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none overflow-hidden rounded-md">
       <div class="shine h-full w-1/3 bg-gradient-to-r from-transparent via-white/40 to-transparent transform skew-x-12"></div>
     </div>
   </div>

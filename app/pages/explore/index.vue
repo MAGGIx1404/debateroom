@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full space-y-6">
+  <Wrapper class="w-full space-y-6">
     <Card class="flex-row items-center justify-between gap-4">
       <h1 class="text-2xl font-medium">Explore Debates</h1>
       <div class="flex items-center gap-2">
@@ -27,7 +27,7 @@
         </Button>
       </div>
     </Card>
-  </div>
+  </Wrapper>
 </template>
 
 <script setup>

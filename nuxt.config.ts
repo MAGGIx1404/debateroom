@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: false },
 
-  modules: ["@nuxt/eslint", "@nuxt/fonts", "@nuxt/image", "@nuxt/scripts", "shadcn-nuxt", "@prisma/nuxt", "@pinia/nuxt", "pinia-plugin-persistedstate/nuxt"],
+  modules: ["@nuxt/eslint", "@nuxt/fonts", "@nuxt/scripts", "shadcn-nuxt", "@prisma/nuxt", "@pinia/nuxt", "pinia-plugin-persistedstate/nuxt", "motion-v/nuxt"],
 
   fonts: {
     provider: "google",

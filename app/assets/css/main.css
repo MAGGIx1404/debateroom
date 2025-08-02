@@ -44,8 +44,8 @@
 }
 
 :root {
-  --radius: 0;
-  --background: oklch(1 0 0);
+  --radius: 0.35rem;
+  --background: oklch(0.97 0 0);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.141 0.005 285.823);
@@ -79,7 +79,7 @@
 }
 
 .dark {
-  --background: oklch(0.141 0.005 285.823);
+  --background: oklch(0.17 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.21 0.006 285.885);
   --card-foreground: oklch(0.985 0 0);
@@ -114,7 +114,7 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border/75 outline-ring/50;
   }
   body {
     @apply bg-background text-foreground font-sans;
@@ -123,10 +123,4 @@
   video {
     @apply object-center object-cover;
   }
-}
-
-html,
-body,
-* {
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }

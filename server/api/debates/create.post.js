@@ -1,4 +1,7 @@
 import prisma from "~~/lib/prisma";
+import { manageRank } from "~~/server/utils/rank-matrix";
+
+const EARNED_POINTS = 50;
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -44,11 +47,14 @@ export default defineEventHandler(async (event) => {
       }))
     });
 
+    await manageRank(user.id, EARNED_POINTS);
+
     return { debate };
   });
 
   return {
     status: "success",
-    data: debate
+    data: debate,
+    earnedPoints: EARNED_POINTS
   };
 });

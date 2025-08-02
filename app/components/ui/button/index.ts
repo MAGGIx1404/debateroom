@@ -13,7 +13,7 @@ export const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
-        gradient: "bg-gradient-to-r from-yellow-600 to-yellow-500 text-primary-foreground shadow-[0px_0px_10px_0px] shadow-yellow-400"
+        gradient: "bg-gradient-to-r from-purple-700 to-purple-500 text-primary-foreground shadow-[0px_0px_10px_0px] shadow-purple-400"
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

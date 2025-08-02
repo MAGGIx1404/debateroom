@@ -13,7 +13,7 @@
       </div>
 
       <Button as-child variant="ghost">
-        <NuxtLink :to="`/profile/${user.username}`"> View Profile </NuxtLink>
+        <NuxtLink :to="`/profile/${user.id}`"> View Profile </NuxtLink>
       </Button>
     </div>
   </div>

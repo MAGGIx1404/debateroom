@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-screen fixed top-0 left-0 z-10 grid place-items-center bg-background/50 backface-hidden">
+  <div class="w-full h-screen backdrop-blur-sm fixed top-0 left-0 z-10 grid place-items-center bg-background/50 backface-hidden">
     <Card class="w-xl">
       <div class="w-full space-y-2">
         <h4 class="text-xl font-semibold">Select an Avatar</h4>

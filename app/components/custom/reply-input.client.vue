@@ -54,7 +54,8 @@ const onSubmit = handleSubmit(async (values) => {
         content: values.message,
         author: {
           id: userStore.getUser.id,
-          username: userStore.getUser.username
+          username: userStore.getUser.username,
+          avatarUrl: userStore.getUser.avatarUrl
         }
       })
     );
@@ -65,10 +66,12 @@ const onSubmit = handleSubmit(async (values) => {
       content: values.message,
       author: {
         id: userStore.getUser.id,
-        username: userStore.getUser.username
+        username: userStore.getUser.username,
+        avatarUrl: userStore.getUser.avatarUrl
       }
     });
 
+    userStore.updatePoints(Number(res.earnedPoints));
     toast.success("Reply sent successfully!");
     isMessageSended.value = true;
     message.value = "";
@@ -93,15 +96,15 @@ function handleInput(event) {
 </script>
 
 <template>
-  <form class="w-full sticky bottom-0 right-0 z-10 bg-card flex flex-col items-end gap-1 py-6" @submit.prevent="onSubmit">
+  <form class="w-full sticky bottom-0 right-0 z-10 bg-card flex flex-col items-end gap-1 pt-2 pb-6 px-6 mt-4" @submit.prevent="onSubmit">
     <div class="w-full flex items-center justify-between gap-4">
       <div class="flex items-center gap-2">
         <Avatar>
-          <AvatarImage src="/avatars/2.png" alt="@unovue" />
+          <AvatarImage :src="userStore.getUser.avatarUrl || '/avatars/2.png'" alt="@unovue" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <p class="text-sm font-semibold">
-          {{ userStore.user.user.username }}
+          {{ userStore.getUser.username }}
         </p>
       </div>
     </div>
