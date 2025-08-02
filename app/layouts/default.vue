@@ -1,5 +1,6 @@
 <template>
   <Navbar />
+  <!-- <ScreensAvatarSelection v-if="!data.user.avatarUrl" /> -->
   <div class="w-full px-20 py-10">
     <slot />
   </div>

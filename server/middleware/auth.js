@@ -1,8 +1,9 @@
 import { clearCookie } from "../utils/cookie";
+import prisma from "~~/lib/prisma";
 
 const ignore = ["/auth/login", "/api/auth/login", "/auth/register", "/api/auth/register"];
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
   const token = getCookie(event, "token");
   const path = getRequestURL(event).pathname;
 
@@ -31,5 +32,17 @@ export default defineEventHandler((event) => {
   }
 
   setHeader(event, "Authorization", `Bearer ${token}`);
-  event.context.user = getUserFromToken(token);
+
+  const { id } = getUserFromToken(token);
+  const user = await prisma.user.findUnique({
+    where: { id }
+  });
+
+  if (!user) {
+    setResponseStatus(event, 401);
+    clearCookie(event, "token");
+    return sendRedirect(event, "/auth/login", 302);
+  }
+
+  event.context.user = user;
 });

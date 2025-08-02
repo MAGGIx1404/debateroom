@@ -12,13 +12,14 @@ export function getUserFromToken(token) {
   }
 }
 
-export function verifyToken(token) {
+export async function verifyToken(token) {
   if (!token) {
     return { success: false, error: "No token" };
   }
 
   try {
     const decoded = jwt.verify(token, config.JWT_SECRET);
+
     return { success: true, data: decoded };
   } catch (err) {
     console.error("Token verification error:", err);

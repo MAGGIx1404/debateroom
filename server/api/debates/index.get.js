@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
           select: { id: true }
         },
         winners: {
-          select: { id: true, username: true }
+          select: { id: true, username: true, avatarUrl: true }
         },
         tags: {
           select: {

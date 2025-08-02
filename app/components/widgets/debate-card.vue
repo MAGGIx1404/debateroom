@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink :to="`/debates/${data.id}`" class="w-full border p-6 shadow flex flex-col gap-3 relative overflow-hidden">
+  <NuxtLink :to="`/debates/${data.id}`" class="w-full border p-6 shadow rounded-xl flex flex-col gap-3 relative overflow-hidden">
     <h1 class="text-xl w-[90%]">{{ data.name }}</h1>
     <p class="text-sm w-[97.5%]">
       {{ data.description }}

@@ -53,8 +53,8 @@ const onSubmit = handleSubmit(async (values) => {
         debateId: id,
         content: values.message,
         author: {
-          id: userStore.user.user.id,
-          username: userStore.user.user.username
+          id: userStore.getUser.id,
+          username: userStore.getUser.username
         }
       })
     );
@@ -64,14 +64,12 @@ const onSubmit = handleSubmit(async (values) => {
       debateId: id,
       content: values.message,
       author: {
-        id: userStore.user.user.id,
-        username: userStore.user.user.username
+        id: userStore.getUser.id,
+        username: userStore.getUser.username
       }
     });
 
     toast.success("Reply sent successfully!");
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate
-
     isMessageSended.value = true;
     message.value = "";
     loading.value = false;

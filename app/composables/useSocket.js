@@ -16,8 +16,6 @@ export default function useSocket() {
       try {
         const payload = JSON.parse(event.data);
 
-        console.log("WebSocket message received:", payload);
-
         if (payload?.type === "reply") {
           store.addReply(payload);
         }

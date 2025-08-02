@@ -18,7 +18,10 @@ export const useRepliesStore = defineStore(
         this.replies.push(reply);
         this.lastReply = reply;
       },
-      clearReplies() {
+      setDebateId(id) {
+        this.debateId = id;
+      },
+      clearAll() {
         this.replies = [];
         this.lastReply = null;
       }

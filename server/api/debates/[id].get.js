@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
           createdAt: true,
           authorId: true,
           author: {
-            select: { id: true, username: true }
+            select: { id: true, username: true, rank: true, avatarUrl: true }
           },
           upvotes: true,
           isAccepted: true

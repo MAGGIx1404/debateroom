@@ -14,9 +14,6 @@
 </template>
 
 <script setup>
-const store = useUserStore();
-const { user } = storeToRefs(store);
-
 const links = [
   {
     name: "Home",
@@ -36,7 +33,7 @@ const links = [
   },
   {
     name: "Profile",
-    to: `/profile/${user.value.user.id}`
+    to: "/profile/dads"
   }
 ];
 </script>

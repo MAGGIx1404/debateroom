@@ -11,6 +11,6 @@ export const useUserStore = defineStore("user", {
   },
   getters: {
     isAuthenticated: (state) => !!state.user,
-    getUser: (state) => state.user
+    getUser: (state) => state.user.user
   }
 });
