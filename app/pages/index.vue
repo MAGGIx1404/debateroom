@@ -39,9 +39,7 @@
           <SkeletonsDebateCard v-for="i in 5" :key="i" :index="i" />
         </div>
         <!-- Main Content -->
-        <AnimatePresence>
-          <WidgetsDebateCard v-for="debate in debatesStore.getDebates" :key="debate.id" :data="debate" />
-        </AnimatePresence>
+        <WidgetsDebateCard v-for="debate in debatesStore.getDebates" :key="debate.id" :data="debate" />
 
         <!-- On scroll Sekeletons -->
         <div v-if="debatesStore.loading && debatesStore.getDebates.length > 0" class="w-full space-y-6">
@@ -73,7 +71,6 @@
 </template>
 
 <script setup>
-import { AnimatePresence } from "motion-v";
 import { Plus } from "lucide-vue-next";
 
 const debatesStore = useDebateStore();

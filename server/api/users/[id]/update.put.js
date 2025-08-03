@@ -5,6 +5,7 @@ import prisma from "~~/lib/prisma";
 
 let avatarUrl = null;
 let bannerUrl = null;
+const config = useRuntimeConfig();
 
 export default defineEventHandler(async (event) => {
   const userId = event.context.params.id;
@@ -23,7 +24,7 @@ export default defineEventHandler(async (event) => {
       const fileStream = fs.createReadStream(avatar[0].filepath);
       const filename = `${userId}-${Date.now()}-${avatar[0].originalFilename}`;
       await minioClient.putObject(bucketName, filename, fileStream);
-      avatarUrl = `http://localhost:9000/${bucketName}/${filename}`;
+      avatarUrl = `http://${config.MINIO_HOST}:9000/${bucketName}/${filename}`;
     }
 
     const banner = files.banner;
@@ -31,7 +32,7 @@ export default defineEventHandler(async (event) => {
       const fileStream = fs.createReadStream(banner[0].filepath);
       const filename = `${userId}-${Date.now()}-${banner[0].originalFilename}`;
       await minioClient.putObject(bucketName, filename, fileStream);
-      bannerUrl = `http://localhost:9000/${bucketName}/${filename}`;
+      bannerUrl = `http://${config.MINIO_HOST}:9000/${bucketName}/${filename}`;
     }
 
     const payload = {

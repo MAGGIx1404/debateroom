@@ -15,7 +15,10 @@
           <div class="w-full space-y-4 col-span-2">
             <!-- Name -->
             <div class="w-max relative">
-              <h1 class="text-2xl font-semibold flex items-center gap-2">Jeet Ramoliya <CustomTierBadge tier="Legend" /></h1>
+              <h1 class="text-2xl font-semibold flex items-center gap-2">
+                {{ user.name || "Anonymous" }}
+                <CustomTierBadge tier="Legend" />
+              </h1>
               <p class="text-sm text-muted-foreground">@{{ user.username }}</p>
 
               <div v-if="user.points >= 100000" class="absolute bottom-0 left-0 z-10 w-full pointer-events-none scale-200">
@@ -125,7 +128,7 @@
         </div>
 
         <!-- Profile -->
-        <div class="size-32 rounded-full ml-4 -mt-16 overflow-hidden relative z-[2] group">
+        <div class="size-32 rounded-full ml-4 -mt-16 overflow-hidden relative z-[2] group bg-muted">
           <div class="size-full absolute top-0 z-[2] grid place-items-center group-hover:bg-muted-foreground/50 transition-all duration-300 ease">
             <Edit class="text-white size-6" />
           </div>
@@ -264,11 +267,11 @@ const onSubmit = async () => {
 
   const formData = new FormData();
   if (payload.avatarUrl && payload.avatarUrl !== user.value.avatarUrl) {
-    formData.append("avatar", selectedAvatarFile.value);
+    formData.append("avatar", selectedAvatarFile.value, selectedAvatarFile.value.name);
   }
 
   if (payload.bannerUrl && payload.bannerUrl !== user.value.bannerUrl) {
-    formData.append("banner", selectedBannerFile.value);
+    formData.append("banner", selectedBannerFile.value, selectedBannerFile.value.name);
   }
   formData.append("username", payload.username);
   formData.append("name", payload.name);

@@ -9,6 +9,8 @@ export const config = {
   }
 };
 
+const _config = useRuntimeConfig();
+
 export default defineEventHandler(async (event) => {
   const userId = event.context.params.id;
 
@@ -29,7 +31,7 @@ export default defineEventHandler(async (event) => {
 
     await minioClient.putObject(bucketName, filename, fileStream);
 
-    const avatarUrl = `http://localhost:9000/${bucketName}/${filename}`;
+    const avatarUrl = `http://${_config.MINIO_HOST}:9000/${bucketName}/${filename}`;
 
     const updatedUser = await prisma.user.update({
       where: { id: userId },
