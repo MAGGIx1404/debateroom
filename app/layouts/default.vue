@@ -24,6 +24,6 @@ const { data } = await useFetch("/api/auth/me", {
 });
 
 if (data.value) {
-  store.setUser(data.value);
+  store.setUser(data.value.user);
 }
 </script>

@@ -33,14 +33,15 @@
       <Separator />
 
       <!-- Debates -->
-      <div class="w-full space-y-6">
+      <div class="w-full space-y-6 min-h-screen">
         <!-- Initial Skeletons -->
-        <div v-if="debatesStore.loading && debatesStore.getDebates.length === 0" class="w-full space-y-6">
+        <div v-if="debatesStore.getDebates.length === 0" class="w-full space-y-6">
           <SkeletonsDebateCard v-for="i in 5" :key="i" :index="i" />
         </div>
-
         <!-- Main Content -->
-        <WidgetsDebateCard v-for="debate in debatesStore.getDebates" :key="debate.id" :data="debate" />
+        <AnimatePresence>
+          <WidgetsDebateCard v-for="debate in debatesStore.getDebates" :key="debate.id" :data="debate" />
+        </AnimatePresence>
 
         <!-- On scroll Sekeletons -->
         <div v-if="debatesStore.loading && debatesStore.getDebates.length > 0" class="w-full space-y-6">
@@ -72,6 +73,7 @@
 </template>
 
 <script setup>
+import { AnimatePresence } from "motion-v";
 import { Plus } from "lucide-vue-next";
 
 const debatesStore = useDebateStore();

@@ -62,7 +62,7 @@ async function uploadAvatar() {
   formData.append("avatar", selectedFile.value);
 
   try {
-    const res = await $fetch(`/api/users/${store.user.user.id}/avatar`, {
+    const res = await $fetch(`/api/users/${store.user.id}/avatar`, {
       method: "POST",
       body: formData
     });

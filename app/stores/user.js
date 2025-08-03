@@ -10,12 +10,12 @@ export const useUserStore = defineStore("user", {
     },
     updatePoints(points) {
       if (this.user) {
-        this.user.user.points += points;
+        this.user.points += points;
       }
     }
   },
   getters: {
     isAuthenticated: (state) => !!state.user,
-    getUser: (state) => state.user.user
+    getUser: (state) => state.user
   }
 });

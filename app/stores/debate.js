@@ -15,7 +15,6 @@ export const useDebateStore = defineStore(
         this.loading = true;
 
         try {
-          await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate a delay
           const response = await $fetch("/api/debates", {
             params: { page: this.page, limit: 10 }
           });
